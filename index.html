@@ -17,10 +17,7 @@
       --yesHover: #ff1f68;
     }
 
-    * {
-      box-sizing: border-box;
-      user-select: none;
-    }
+    * { box-sizing: border-box; user-select: none; }
 
     body {
       margin: 0;
@@ -49,14 +46,14 @@
       backdrop-filter: blur(10px);
       border-radius: 22px;
       text-align: center;
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.15);
     }
 
     .art {
       width: min(260px, 80vw);
       margin: 0 auto 10px;
       display: block;
-      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.12));
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,0.12));
     }
 
     h1 {
@@ -82,7 +79,7 @@
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.14);
       transition: transform 0.12s ease, background 0.12s ease;
     }
 
@@ -92,9 +89,7 @@
       color: #fff;
     }
 
-    #yesBtn:hover {
-      background: var(--yesHover);
-    }
+    #yesBtn:hover { background: var(--yesHover); }
 
     #noBtn {
       left: 75%;
@@ -119,16 +114,18 @@
       margin: 10px 0;
     }
 
+    /* Side-by-side layout for GIF + image */
     .result-content {
-      display: flex;           /* side by side */
-      justify-content: center; /* center horizontally */
-      align-items: center;     /* align vertically */
-      gap: 20px;               /* space between GIF and image */
-      flex-wrap: wrap;         /* wrap on small screens */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap; /* wrap on small screens */
+      margin-top: 12px;
     }
 
     .fireworks, .memory {
-      max-width: 45%;          /* both take up almost half width */
+      max-width: 45%;
       height: auto;
       display: block;
       border-radius: 16px;
@@ -136,14 +133,8 @@
     }
 
     @keyframes fadePop {
-      from {
-        opacity: 0;
-        transform: translateY(10px) scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(10px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
   </style>
 </head>
@@ -194,11 +185,12 @@
 
     <div class="hint" id="hint">“No” seems a bit shy 😏</div>
 
+    <!-- Result Section -->
     <section class="result" id="result">
-      <h2> YAYYYY 💖🎉Bujji ILU 💖🎉  </h2>
+      <h2>YAYYYY 🎉💖ILU TOO 🎉💖 </h2>
       <div class="result-content">
-        <img class="memory" src="photo.jpeg" alt="Special memory">
         <img class="fireworks" src="fireworks.gif" alt="Fireworks celebration">
+        <img class="memory" src="photo.png" alt="Special memory">
       </div>
     </section>
   </main>
@@ -222,10 +214,7 @@
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    const confettiInstance = confetti.create(confettiCanvas, {
-      resize: false,
-      useWorker: true,
-    });
+    const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
 
     function launchConfetti() {
       const end = Date.now() + 1500;
@@ -246,25 +235,22 @@
     function moveNo(x, y) {
       const z = zone.getBoundingClientRect();
       const b = noBtn.getBoundingClientRect();
-
-      let dx = b.left + b.width / 2 - x;
-      let dy = b.top + b.height / 2 - y;
+      let dx = b.left + b.width/2 - x;
+      let dy = b.top + b.height/2 - y;
       let mag = Math.hypot(dx, dy) || 1;
+      dx /= mag; dy /= mag;
 
-      dx /= mag;
-      dy /= mag;
+      noBtn.style.left = Math.min(z.width-b.width, Math.max(0, b.left-z.left + dx*120)) + "px";
+      noBtn.style.top  = Math.min(z.height-b.height, Math.max(0, b.top-z.top + dy*120)) + "px";
 
-      noBtn.style.left = Math.min(z.width - b.width, Math.max(0, b.left - z.left + dx * 120)) + "px";
-      noBtn.style.top = Math.min(z.height - b.height, Math.max(0, b.top - z.top + dy * 120)) + "px";
-
-      yesScale = Math.min(2.2, yesScale + 0.1);
+      yesScale = Math.min(2.2, yesScale+0.1);
       yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
     }
 
     zone.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
-      const d = Math.hypot(b.left + b.width / 2 - e.clientX, b.top + b.height / 2 - e.clientY);
-      if (d < 140) moveNo(e.clientX, e.clientY);
+      const d = Math.hypot(b.left+b.width/2 - e.clientX, b.top+b.height/2 - e.clientY);
+      if(d < 140) moveNo(e.clientX, e.clientY);
     });
 
     yesBtn.addEventListener("click", () => {
