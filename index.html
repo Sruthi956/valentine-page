@@ -119,13 +119,20 @@
       margin: 10px 0;
     }
 
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
-      display: block;
+    .result-content {
+      display: flex;           /* side by side */
+      justify-content: center; /* center horizontally */
+      align-items: center;     /* align vertically */
+      gap: 20px;               /* space between GIF and image */
+      flex-wrap: wrap;         /* wrap on small screens */
     }
-    .memory {
-      border-radius: 24px 24px 40px 40px;
+
+    .fireworks, .memory {
+      max-width: 45%;          /* both take up almost half width */
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
     }
 
     @keyframes fadePop {
