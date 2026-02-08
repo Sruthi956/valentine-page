@@ -30,13 +30,14 @@
       padding: 16px;
     }
 
+    /* CONFETTI CANVAS */
     #confettiCanvas {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
+      pointer-events: none; /* allow clicks through */
+      z-index: 1; /* below buttons */
     }
 
     .card {
@@ -47,6 +48,8 @@
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 10; /* above canvas */
     }
 
     .art {
@@ -63,6 +66,7 @@
 
     .button-zone {
       position: relative;
+      z-index: 20; /* above canvas */
       width: min(520px, 92%);
       height: 150px;
       margin: 0 auto;
@@ -83,25 +87,11 @@
       transition: transform 0.12s ease, background 0.12s ease;
     }
 
-    #yesBtn {
-      left: 25%;
-      background: var(--yes);
-      color: #fff;
-    }
-
+    #yesBtn { left: 25%; background: var(--yes); color: #fff; }
     #yesBtn:hover { background: var(--yesHover); }
+    #noBtn { left: 75%; background: #e5e7eb; color: #111827; }
 
-    #noBtn {
-      left: 75%;
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .hint {
-      margin-top: 10px;
-      font-size: 13px;
-      opacity: 0.7;
-    }
+    .hint { margin-top: 10px; font-size: 13px; opacity: 0.7; }
 
     .result {
       display: none;
@@ -114,7 +104,7 @@
       margin: 10px 0;
     }
 
-    /* Side-by-side layout for GIF + image */
+    /* Side by side GIF + image */
     .result-content {
       display: flex;
       justify-content: center;
@@ -140,7 +130,11 @@
 </head>
 
 <body>
+  <!-- Confetti -->
   <canvas id="confettiCanvas"></canvas>
+
+  <!-- Music -->
+  <audio id="celebrateSound" src="celebration.mp3"></audio>
 
   <main class="card">
     <!-- Cute SVG -->
@@ -176,21 +170,21 @@
             fill="#ff7aa2" />
     </svg>
 
-    <h1>BUJJI 💖 Will you be my lifelong best friend?</h1>
+    <h1>BUJJI 💖 Will U Be My LifeLong BestFriend?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </section>
 
-    <div class="hint" id="hint">“No” seems a bit shy 😏</div>
+    <div class="hint" id="hint">“No” seems a bit shy please 😏</div>
 
-    <!-- Result Section -->
+    <!-- Result -->
     <section class="result" id="result">
-      <h2>YAYYYY 💞ILU💞</h2>
+      <h2>YAYYYY 💖ILU💖</h2>
       <div class="result-content">
-        <img class="memory" src="photo.jpeg" alt="Special memory">
         <img class="fireworks" src="fireworks.gif" alt="Fireworks celebration">
+        <img class="memory" src="photo.jpg" alt="Special memory">
       </div>
     </section>
   </main>
@@ -202,6 +196,7 @@
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
     const confettiCanvas = document.getElementById("confettiCanvas");
+    const sound = document.getElementById("celebrateSound");
 
     function resizeCanvas() {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -257,10 +252,16 @@
       zone.style.display = "none";
       hint.style.display = "none";
       result.style.display = "block";
+
+      // play music
+      sound.currentTime = 0;
+      sound.play();
+
       resizeCanvas();
       launchConfetti();
     });
-    
+
+    noBtn.addEventListener("click", e => e.preventDefault());
   </script>
 </body>
 </html>
