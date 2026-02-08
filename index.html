@@ -258,11 +258,7 @@
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
       hint.style.display = "none";
-      result.style.display = "block";   
-      // Play celebration music
-      const sound = document.getElementById("celebrateSound");
-      sound.currentTime = 0; // start from beginning
-      sound.play();
+      result.style.display = "block";
       resizeCanvas();
       launchConfetti();
     });
