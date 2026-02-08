@@ -247,6 +247,8 @@
       yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
     }
 
+    <audio id="celebrateSound" src="celebration.mp3" loop></audio>
+
     zone.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
       const d = Math.hypot(b.left+b.width/2 - e.clientX, b.top+b.height/2 - e.clientY);
@@ -256,10 +258,15 @@
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
       hint.style.display = "none";
-      result.style.display = "block";
+      result.style.display = "block";   
+      // Play celebration music
+      const sound = document.getElementById("celebrateSound");
+      sound.currentTime = 0; // start from beginning
+      sound.play();
       resizeCanvas();
       launchConfetti();
     });
+
   </script>
 </body>
 </html>
