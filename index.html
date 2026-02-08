@@ -30,14 +30,13 @@
       padding: 16px;
     }
 
-    /* CONFETTI CANVAS */
     #confettiCanvas {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none; /* allow clicks through */
-      z-index: 1; /* below buttons */
+      pointer-events: none; /* clicks pass through */
+      z-index: 1;
     }
 
     .card {
@@ -49,7 +48,7 @@
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,0.15);
       position: relative;
-      z-index: 10; /* above canvas */
+      z-index: 10;
     }
 
     .art {
@@ -104,13 +103,12 @@
       margin: 10px 0;
     }
 
-    /* Side by side GIF + image */
     .result-content {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 20px;
-      flex-wrap: wrap; /* wrap on small screens */
+      flex-wrap: wrap;
       margin-top: 12px;
     }
 
@@ -134,7 +132,7 @@
   <canvas id="confettiCanvas"></canvas>
 
   <!-- Music -->
-  <audio id="celebrateSound" src="celebration.MP3"></audio>
+  <audio id="celebrateSound" src="celebration.mp3" preload="auto"></audio>
 
   <main class="card">
     <!-- Cute SVG -->
@@ -170,7 +168,7 @@
             fill="#ff7aa2" />
     </svg>
 
-    <h1>BUJJI 💖 Will U Be My LifeLong BestFriend?</h1>
+    <h1>BUJJI 💖 Will you be my lifelong best friend?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
@@ -181,10 +179,10 @@
 
     <!-- Result -->
     <section class="result" id="result">
-      <h2>YAYYYY 💖ILU💖</h2>
+      <h2>YAYYYY 🎉💖</h2>
       <div class="result-content">
         <img class="fireworks" src="fireworks.gif" alt="Fireworks celebration">
-        <img class="memory" src="photo.jpeg" alt="Special memory">
+        <img class="memory" src="photo.jpg" alt="Special memory">
       </div>
     </section>
   </main>
@@ -253,9 +251,8 @@
       hint.style.display = "none";
       result.style.display = "block";
 
-      // play music
       sound.currentTime = 0;
-      sound.play();
+      sound.play().catch(err => console.log("Audio blocked:", err));
 
       resizeCanvas();
       launchConfetti();
