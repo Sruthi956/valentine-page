@@ -247,8 +247,6 @@
       yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
     }
 
-    <audio id="celebrateSound" src="celebration.mp3" loop></audio>
-
     zone.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
       const d = Math.hypot(b.left+b.width/2 - e.clientX, b.top+b.height/2 - e.clientY);
@@ -262,6 +260,7 @@
       resizeCanvas();
       launchConfetti();
     });
+    
   </script>
 </body>
 </html>
